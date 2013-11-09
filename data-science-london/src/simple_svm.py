@@ -21,7 +21,7 @@ if __name__ == "__main__":
     train_features = np.array(train_features)
     train_labels = np.array(train_labels)
 
-    clf = svm.SVC()
+    clf = svm.SVC(C=100, cache_size=200, class_weight=None, coef0=0.0, degree=3,gamma=0.001, kernel="rbf", max_iter=-1, probability=False,random_state=None, shrinking=True, tol=0.001, verbose=False)
 
     clf.fit(train_features, train_labels)
 

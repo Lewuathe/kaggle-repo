@@ -5,6 +5,7 @@ import sys
 from sklearn import svm
 from sklearn import cross_validation
 from sklearn import preprocessing
+from sklearn.grid_search import GridSearchCV
 import numpy as np
 import csv
 
@@ -28,6 +29,16 @@ def get_accuracy(clf, train_features, train_labels):
     scores = cross_validation.cross_val_score(clf, train_features, train_labels, cv=10)
     print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
+def grid_search(train_features, train_labels):
+    param_grid = [
+        {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+        {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+    ]
+    
+    clf = GridSearchCV(svm.SVC(C=1), param_grid, n_jobs=-1)
+    clf.fit(train_features, train_labels)
+    print clf.best_estimator_
+    
 
 if __name__ == "__main__":
 #    train_feature_file       = csv.reader(open("train.csv", "rb"))
@@ -44,11 +55,8 @@ if __name__ == "__main__":
     train_features = np.array(train_features)
     train_labels = np.array(train_labels)
 
-#    min_max_scaler = preprocessing.MinMaxScaler()
-#    train_features = preprocessing.normalize(train_features, norm="l2")
 
-    clf = svm.SVC(C=100, cache_size=200, class_weight=None, coef0=0.0, degree=3,gamma=0.001, kernel="rbf", max_iter=-1, probability=False,random_state=None, shrinking=True, tol=0.001, verbose=False)
-    get_accuracy(clf, train_features, train_labels)
+    grid_search(train_features, train_labels)
 
 
 #    clf.fit(train_features, train_labels)
