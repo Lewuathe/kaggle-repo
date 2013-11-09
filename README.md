@@ -1,4 +1,4 @@
 kaggle-repo
 ===========
 
-My Kaggle programs
+Kaggle programs
