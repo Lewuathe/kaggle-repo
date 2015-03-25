@@ -41,3 +41,6 @@ nosetests.xml
 
 # Data
 *.csv
+.DS_Store
+*.jpeg
+*lmdb
